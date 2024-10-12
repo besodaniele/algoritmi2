@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Sequences__algos {
+public class SequencesAlgos {
 
 
     public static Sequence LCS_R(Sequence x, Sequence y, int i, int j) {
