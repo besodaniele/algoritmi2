@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class LCS {
+public class Sequences__algos {
 
 
     public static Sequence LCS_R(Sequence x, Sequence y, int i, int j) {
@@ -21,7 +22,6 @@ public class LCS {
         }
 
     }
-
     public static void LCS_DP(Sequence x, Sequence y) {
 
         int m = x.getLength();
@@ -80,6 +80,52 @@ public class LCS {
 
         }
     }
+
+    public static void LIS(IntSequence X){
+        int n=X.getLength();
+        int []c=new int[n];
+        int []b=new int[n];
+
+        c[0]=1;
+        b[0]=-1;
+        int max=c[0];
+        int tmp=0;
+        int idx=-1;
+        for(int i=1;i<n;i++){
+            tmp=0;
+            idx=-1;
+            for(int j=0;j<i;j++){
+                if(X.getAt(j) < X.getAt(i) && c[j]>tmp){
+                    tmp=c[j];
+                    idx=j;
+                }
+
+            }
+            c[i]=tmp+1;
+            b[i]=idx;
+            if(c[i]>max){
+                max=c[i];
+            }
+        }
+        System.out.println(Arrays.toString(c));
+        System.out.println(Arrays.toString(b));
+        for (int i=0;i<n;i++){
+            if(c[i]==max){
+                print_LIS(i,b,X);
+
+            }
+        }
+    }
+    public static void print_LIS(int i,int []b, IntSequence X){
+        if(b[i]!=-1){
+            print_LIS(b[i],b,X);
+            System.out.println(X.getAt(i));
+        }
+        else{
+            System.out.println(X.getAt(i));
+        }
+    }
+
 
 
     public static void printMatrix(int[][] m){
