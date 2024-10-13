@@ -126,12 +126,71 @@ public class SequencesAlgos {
         }
     }
 
+    public static void LICS(IntSequence x,IntSequence y){
+        int m=x.getLength();
+        int n= y.getLength();
+        int [][]c=new int[m][n];
 
-
+        Pair [][]b=new Pair[m][n];
+        Pair maxIdx = new Pair(-1,-1);
+        int max=0;
+        int tmp=0;
+        for (int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(x.getAt(i)!=y.getAt(j)){
+                    c[i][j]=0;
+                    b[i][j]=maxIdx;
+                }
+                else{
+                    tmp=0;
+                    for(int h=0;h<i;h++){
+                        for(int k=0;k<j;k++){
+                            if(x.getAt(h)<x.getAt(i) && c[h][k]>tmp){
+                                tmp=c[h][k];
+                                b[i][j]=new Pair(h,k);}
+                        }
+                    }
+                    if(b[i][j]==null){
+                        b[i][j]=new Pair(-1,-1);
+                    }
+                    c[i][j]=tmp+1;
+                    if(c[i][j]>max){
+                       max=c[i][j];
+                          maxIdx=new Pair(i,j);
+                    }
+                }
+            }
+        }
+        printMatrix(c);
+        System.out.println();
+        System.out.println();
+        printMatrix(b);
+        print_Lics(m-1,n-1,b,x,y);
+    }
+    public static void print_Lics(int i,int j,Pair [][]b,IntSequence x,IntSequence y){
+        if(i>=0 && j>=0 ){
+            var idx=b[i][j];
+            print_Lics(idx.getX(),idx.getY(),b,x,y);
+            if(x.getAt(i)==y.getAt(j)){
+                System.out.println(x.getAt(i));
+            }
+        }
+    }
     public static void printMatrix(int[][] m){
         for (var row :m ){
             for (var cell:row){
                 System.out.print(cell+" ");
+            }
+            System.out.println();
+        }
+
+
+
+    }
+    public static void printMatrix(Pair[][] m){
+        for (var row :m ){
+            for (var cell:row){
+                System.out.print(cell.toString()+" ");
             }
             System.out.println();
         }
